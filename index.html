@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="bootstrap.min.css" />
+        <link rel="stylesheet" href="styles.css" />
+        <script src="https://kit.fontawesome.com/7c3398c69c.js" crossorigin="anonymous"></script>
+        <title>Sudoku Game</title>
+    </head>
+    <body class="d-flex flex-column">
+        <header class="page-header">
+            <h1 class="page-heading"><i class="fas fa-hashtag"></i>Sudoku Game</h1>
+        </header>
+        <div class="container d-flex flex-column align-items-center my-4">
+            <form id="board-controls" class="form mt-4 row col-8 d-flex justify-content-between">
+                <select id="difficulty" name="difficulty" class="form-select">
+                    <option value="easy" selected>Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+
+                <select id="timer" name="timer" class="form-select">
+                    <option value="20" selected>0:20</option>
+                    <option value="300">5:00</option>
+                    <option value="600">10:00</option>
+                    <option value="900">15:00</option>
+                    <option value="600">20:00</option>
+                    <option value="1200">25:00</option>
+                    <option value="1500">30:00</option>
+                    <option value="1800">35:00</option>
+                    <option value="2100">40:00</option>
+                    <option value="2400">45:00</option>
+                    <option value="3000">50:00</option>
+                    <option value="3300">55:00</option>
+                    <option value="3600">60:00</option>
+                </select>
+
+                <button id="new-game" class="btn btn-primary">New Board</button>
+            </form>
+            <div id="result" class="mt-4">
+                <p id="timer-display">15:00</p>
+                <p id="result-display"></p>
+            </div>
+            <div id="main-display" class="d-flex align-items-center justify-content-center">
+                <div id="board" class="d-flex flex-column align-items-center me-5">
+                    <div class="d-flex game-row justify-content-center">
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                    </div>
+                    <div class="d-flex game-row justify-content-center">
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                    </div>
+                    <div class="d-flex game-row justify-content-center">
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                    </div>
+                    <div class="d-flex game-row justify-content-center">
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                    </div>
+                    <div class="d-flex game-row justify-content-center">
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                    </div>
+                    <div class="d-flex game-row justify-content-center">
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                    </div>
+                    <div class="d-flex game-row justify-content-center">
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                    </div>
+                    <div class="d-flex game-row justify-content-center">
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                    </div>
+                    <div class="d-flex game-row justify-content-center">
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                        <input class="form-control game-box" type="text" />
+                    </div>
+                </div>
+                <div id="buttons" class="d-flex flex-column">
+                    <button class="btn input-button m-2" data-value="1">1</button>
+                    <button class="btn input-button m-2" data-value="2">2</button>
+                    <button class="btn input-button m-2" data-value="3">3</button>
+                    <button class="btn input-button m-2" data-value="4">4</button>
+                    <button class="btn input-button m-2" data-value="5">5</button>
+                    <button class="btn input-button m-2" data-value="6">6</button>
+                    <button class="btn input-button m-2" data-value="7">7</button>
+                    <button class="btn input-button m-2" data-value="8">8</button>
+                    <button class="btn input-button m-2" data-value="9">9</button>
+                    <button class="btn input-button m-2" data-value="0">
+                        <i class="fas fa-eraser"></i>
+                    </button>
+                </div>
+            </div>
+            <button id="start-timer" class="btn btn-danger col-8 mt-5 mb-3">Start Game</button>
+        </div>
+        <footer class="page-footer mt-auto">
+            <p class="m-0">&copy; 2021 Aditya Chhaparia</p>
+        </footer>
+    </body>
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="game.js" type="module"></script>
+</html>

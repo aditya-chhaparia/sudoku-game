@@ -1,0 +1,115 @@
+:root {
+    --primary-gray: #667687;
+    --blue-gray: #6699cc;
+    --dark-gray: #222;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.page-header {
+    padding: 50px 20px 40px;
+    background-color: var(--blue-gray);
+}
+
+.page-heading {
+    text-transform: uppercase;
+    font-size: 4em;
+    text-align: center;
+}
+
+.page-footer {
+    padding: 10px 40px;
+    font-size: 1.2em;
+    background-color: var(--dark-gray);
+    color: white;
+    text-align: right;
+}
+
+#main-display {
+    width: 100%;
+}
+.game-box,
+.game-box:focus {
+    outline: none;
+    box-shadow: none;
+    border-radius: 0;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.game-row {
+    border-left: 4px solid var(--primary-gray);
+    border-right: 4px solid var(--primary-gray);
+}
+
+.game-row:first-of-type {
+    border-top: 4px solid var(--primary-gray);
+}
+
+.game-row:last-of-type {
+    border-bottom: 4px solid var(--primary-gray);
+}
+
+.left-box {
+    border-left: 1.5px solid var(--primary-gray);
+}
+
+.right-box {
+    border-right: 1.5px solid var(--primary-gray);
+}
+
+.top-box {
+    border-top: 1.5px solid var(--primary-gray);
+}
+
+.bottom-box {
+    border-bottom: 1.5px solid var(--primary-gray);
+}
+
+.input-button {
+    font-size: 1.5em;
+    background-color: var(--primary-gray);
+    color: white;
+}
+
+.input-button:hover {
+    color: white;
+}
+
+.input-button-active {
+    background-color: var(--dark-gray);
+}
+.form-select {
+    width: 30%;
+    height: 48px;
+}
+
+#new-game {
+    width: 30%;
+    height: 48px;
+}
+
+#start-timer {
+    height: 48px;
+}
+
+#result {
+    text-align: center;
+}
+
+#timer-display {
+    padding: 5px;
+    font-size: 3em;
+    letter-spacing: 4px;
+    margin-bottom: 0;
+}
+
+#result-display {
+    height: 40px;
+    font-size: 2em;
+    text-transform: uppercase;
+}
