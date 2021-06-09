@@ -86,8 +86,8 @@ function correctCount(row, col, newValue) {
 function boxInputEvent(e) {
     e.preventDefault();
     let pos = [...boxes].indexOf(e.target);
-    col = pos % 9;
-    row = (pos - col) / 9;
+    let col = pos % 9;
+    let row = (pos - col) / 9;
     let value = e.target.value;
     if (value === "") return;
     else if (value === "0") value = "";
@@ -101,8 +101,8 @@ function boxInputEvent(e) {
 function boxClickEvent(e) {
     e.preventDefault();
     let pos = [...boxes].indexOf(e.target);
-    col = pos % 9;
-    row = (pos - col) / 9;
+    let col = pos % 9;
+    let row = (pos - col) / 9;
     if (game.currentValue === "0") {
         e.target.value = "";
     } else if (game.currentValue) {
