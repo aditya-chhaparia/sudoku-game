@@ -1,5 +1,3 @@
-import * as Board from "./board.js";
-
 const selectOne = (selector) => {
     return document.querySelector(selector);
 };
@@ -46,10 +44,10 @@ function printBoard(grid) {
 function gameGridSetup() {
     let difficulty = boardControls.difficulty.value;
     let { rounds, min_length } = settings[difficulty];
-    game.grid = Board.generateGrid();
-    game.solution = Board.generateGrid();
-    Board.generateRandomGrid(game.solution);
-    Board.generateRandomSudoku(game.grid, game.solution, rounds, min_length);
+    game.grid = generateGrid();
+    game.solution = generateGrid();
+    generateRandomGrid(game.solution);
+    generateRandomSudoku(game.grid, game.solution, rounds, min_length);
     let arr = [];
     game.correct_count = 0;
     for (let i = 0; i < 9; i++) {
