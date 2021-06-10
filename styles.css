@@ -137,6 +137,9 @@ body {
         background-color: var(--primary-gray);
         color: white;
     }
+    .input-button-active {
+        background-color: var(--dark-gray);
+    }
 }
 
 @media only screen and (max-width: 767.98px) {
@@ -160,6 +163,9 @@ body {
         font-size: 1.2em;
         background-color: var(--primary-gray);
         color: white;
+    }
+    .input-button-active {
+        background-color: var(--dark-gray);
     }
     #board {
         margin: 0 0 20px;
@@ -193,6 +199,9 @@ body {
         padding: 3px 8px;
         color: white;
         margin: 2px !important;
+    }
+    .input-button-active {
+        background-color: var(--dark-gray);
     }
     #board {
         margin: 0 0 20px;
