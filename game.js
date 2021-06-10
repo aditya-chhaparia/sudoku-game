@@ -136,7 +136,7 @@ function conflictColoring() {
 }
 
 function inputButtonClickEvent(e) {
-    e.preventDefault();
+    console.log("clicked");
     let target = e.target;
     if (e.target.tagName === "I") target = e.target.parentElement;
     target.blur();
