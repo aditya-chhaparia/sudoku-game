@@ -3,13 +3,16 @@ function isValidLocation(grid, row, col, num) {
         return false;
     }
     for (let i = 0, j = col; i < 9; i++) {
+        if (i === row) continue;
         if (grid[i][j] === num) return false;
     }
     for (let i = row, j = 0; j < 9; j++) {
+        if (j === col) continue;
         if (grid[i][j] === num) return false;
     }
     for (let i = row - (row % 3); i < row - (row % 3) + 3; i++) {
         for (let j = col - (col % 3); j < col - (col % 3) + 3; j++) {
+            if (i === row && j === col) continue;
             if (grid[i][j] === num) return false;
         }
     }

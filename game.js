@@ -46,19 +46,24 @@ function gameGridSetup() {
     let { rounds, min_length } = settings[difficulty];
     game.grid = generateGrid();
     game.solution = generateGrid();
+    game.initialSetup = generateGrid();
     generateRandomGrid(game.solution);
     generateRandomSudoku(game.grid, game.solution, rounds, min_length);
-    let arr = [];
+    copyBoard(game.grid, game.initialSetup);
+}
+
+function countInitialize() {
     game.correct_count = 0;
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
-            if (game.grid[i][j]) game.correct_count++;
+            if (game.initialSetup[i][j]) game.correct_count++;
         }
     }
+    copyBoard(game.grid, game.initialSetup);
 }
 
 function boardInitialize() {
-    game.grid.forEach((row, i) => {
+    game.initialSetup.forEach((row, i) => {
         row.forEach((value, j) => {
             if (value !== 0) {
                 boxes[i * 9 + j].value = value;
@@ -83,76 +88,128 @@ function correctCount(row, col, newValue) {
 
 function boxInputEvent(e) {
     e.preventDefault();
-    let pos = [...boxes].indexOf(e.target);
-    let col = pos % 9;
-    let row = (pos - col) / 9;
+
     let value = e.target.value;
     if (value === "") return;
     else if (value === "0") value = "";
     else value = value[value.length - 1];
     e.target.value = value;
-    correctCount(row, col, Number.parseInt(e.target.value));
-    game.grid[row][col] = Number.parseInt(e.target.value);
-    checkSolve();
+    let pos = [...boxes].indexOf(e.target);
+    inputChange(Number.parseInt(e.target.value), pos);
 }
 
 function boxClickEvent(e) {
     e.preventDefault();
-    let pos = [...boxes].indexOf(e.target);
-    let col = pos % 9;
-    let row = (pos - col) / 9;
     if (game.currentValue === "0") {
         e.target.value = "";
     } else if (game.currentValue) {
         e.target.value = game.currentValue;
     }
-    correctCount(row, col, Number.parseInt(e.target.value));
-    game.grid[row][col] = Number.parseInt(e.target.value);
+    let pos = [...boxes].indexOf(e.target);
+    inputChange(Number.parseInt(e.target.value), pos);
+}
+
+function inputChange(value, pos) {
+    let col = pos % 9;
+    let row = (pos - col) / 9;
+    correctCount(row, col, value);
+    game.grid[row][col] = 0;
+    game.grid[row][col] = value;
+    conflictColoring();
     checkSolve();
+}
+
+function conflictColoring() {
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            if (game.initialSetup[row][col]) continue;
+            let value = game.grid[row][col];
+            game.grid[row][col] = 0;
+            if (!isValidLocation(game.grid, row, col, value)) {
+                boxes[row * 9 + col].classList.add("conflict");
+            } else {
+                boxes[row * 9 + col].classList.remove("conflict");
+            }
+            game.grid[row][col] = value;
+        }
+    }
 }
 
 function inputButtonClickEvent(e) {
     e.preventDefault();
-    e.target.blur();
-    if (e.target.classList.contains("input-button-active")) {
+    let target = e.target;
+    if (e.target.tagName === "I") target = e.target.parentElement;
+    target.blur();
+    if (target.classList.contains("input-button-active")) {
         game.currentValue = "";
     } else {
-        game.currentValue = e.target.dataset.value;
+        game.currentValue = target.dataset.value;
     }
     inputButtons.forEach((button) => {
-        if (button === e.target) return;
+        if (button === target) return;
         button.classList.remove("input-button-active");
     });
-    e.target.classList.toggle("input-button-active");
+    // if (e.target.tagName === "I") e.target.parentElement.classList.toggle("input-button-active");
+    target.classList.toggle("input-button-active");
+}
+
+function unfocusable(e) {
+    e.target.blur();
 }
 
 function startGame() {
     clearInterval(timer.key);
+    timerDisplay.innerText = timeConvert(Number.parseInt(boardControls.timer.value));
     boardInitialize(); //so that players do not edit board before they start timer
-    boxes.forEach((box, i) => {
-        box.addEventListener("input", boxInputEvent);
-        box.addEventListener("click", boxClickEvent);
-    });
+    countInitialize();
     inputButtons.forEach((button) => {
-        button.addEventListener("click", inputButtonClickEvent);
+        button.classList.remove("input-button-active");
     });
+    removeExtraClasses();
+    addGameEventListeners();
     timerSet();
 }
 
 function newGame() {
     clearInterval(timer.key);
+    timerDisplay.innerText = timeConvert(Number.parseInt(boardControls.timer.value));
     gameGridSetup();
     boardInitialize();
+    countInitialize();
+    removeExtraClasses();
     resetGameEventListeners();
+}
+
+function removeExtraClasses() {
+    boxes.forEach((box) => {
+        box.classList.remove("conflict");
+    });
+    inputButtons.forEach((button) => {
+        button.classList.remove("input-button-active");
+    });
+}
+
+function addGameEventListeners() {
+    boxes.forEach((box, i) => {
+        box.addEventListener("input", boxInputEvent);
+        box.addEventListener("click", boxClickEvent);
+        box.removeEventListener("focus", unfocusable);
+    });
+    inputButtons.forEach((button) => {
+        button.addEventListener("click", inputButtonClickEvent);
+        button.removeEventListener("focus", unfocusable);
+    });
 }
 
 function resetGameEventListeners() {
     boxes.forEach((box, i) => {
         box.removeEventListener("input", boxInputEvent);
         box.removeEventListener("click", boxClickEvent);
+        box.addEventListener("focus", unfocusable);
     });
     inputButtons.forEach((button) => {
         button.removeEventListener("click", inputButtonClickEvent);
+        button.addEventListener("focus", unfocusable);
     });
 }
 
@@ -176,6 +233,7 @@ function checkSolve() {
     if (game.correct_count === 81) {
         clearInterval(timer.key);
         resultDisplay.innerText = "You win.";
+        resetGameEventListeners();
     }
 }
 
