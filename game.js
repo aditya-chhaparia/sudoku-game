@@ -158,26 +158,26 @@ function unfocusable(e) {
 }
 
 function startGame() {
-    clearInterval(timer.key);
-    timerDisplay.innerText = timeConvert(Number.parseInt(boardControls.timer.value));
-    boardInitialize(); //so that players do not edit board before they start timer
-    countInitialize();
-    inputButtons.forEach((button) => {
-        button.classList.remove("input-button-active");
-    });
-    removeExtraClasses();
+    resetGame();
     addGameEventListeners();
     timerSet();
 }
 
 function newGame() {
-    clearInterval(timer.key);
-    timerDisplay.innerText = timeConvert(Number.parseInt(boardControls.timer.value));
     gameGridSetup();
+    resetGame();
+    resetGameEventListeners();
+}
+
+function resetGame() {
+    clearInterval(timer.key);
+    timer.timeRemaining = 0;
+    game.currentValue = "";
+    timerDisplay.innerText = timeConvert(Number.parseInt(boardControls.timer.value));
+    resultDisplay.innerText = "";
     boardInitialize();
     countInitialize();
     removeExtraClasses();
-    resetGameEventListeners();
 }
 
 function removeExtraClasses() {
