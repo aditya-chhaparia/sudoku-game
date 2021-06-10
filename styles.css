@@ -88,6 +88,12 @@ body {
     height: 48px;
 }
 
+.conflict,
+.conflict:hover,
+.conflict:focus {
+    color: red;
+}
+
 #new-game {
     width: 30%;
     height: 48px;
