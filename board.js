@@ -1,4 +1,4 @@
-function isValidLocation(grid, row, col, num) {
+export function isValidLocation(grid, row, col, num) {
     if (grid[row][col] !== 0) {
         return false;
     }
@@ -19,7 +19,7 @@ function isValidLocation(grid, row, col, num) {
     return true;
 }
 
-function solveSudoku(grid, row, col) {
+export function solveSudoku(grid, row, col) {
     if (col === 9) {
         col = 0;
         row++;
@@ -40,7 +40,7 @@ function solveSudoku(grid, row, col) {
     return false;
 }
 
-function countSolutions(grid, row, col, count) {
+export function countSolutions(grid, row, col, count) {
     if (col === 9) {
         col = 0;
         row++;
@@ -63,7 +63,7 @@ function countSolutions(grid, row, col, count) {
     return count;
 }
 
-function generateGrid() {
+export function generateGrid() {
     let grid = new Array(9);
     for (let i = 0; i < 9; i++) {
         grid[i] = new Array(9);
@@ -74,7 +74,7 @@ function generateGrid() {
     return grid;
 }
 
-function generateRandomGrid(grid) {
+export function generateRandomGrid(grid) {
     function fillBox(row, col) {
         for (let i = row; i < row + 3; i++) {
             for (let j = col; j < col + 3; j++) {
@@ -92,7 +92,7 @@ function generateRandomGrid(grid) {
     solveSudoku(grid, 0, 0);
 }
 
-function copyBoard(a, b) {
+export function copyBoard(a, b) {
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
             b[i][j] = a[i][j];
@@ -100,7 +100,7 @@ function copyBoard(a, b) {
     }
 }
 
-function generateRandomSudoku(grid, solution, rounds, min_length) {
+export function generateRandomSudoku(grid, solution, rounds, min_length) {
     copyBoard(solution, grid);
     let arr = [];
     for (let i = 0; i < 9; i++) {

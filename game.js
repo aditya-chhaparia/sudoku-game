@@ -1,3 +1,11 @@
+import {
+    isValidLocation,
+    generateGrid,
+    generateRandomGrid,
+    generateRandomSudoku,
+    copyBoard
+} from "./board.js";
+
 const selectOne = (selector) => {
     return document.querySelector(selector);
 };
