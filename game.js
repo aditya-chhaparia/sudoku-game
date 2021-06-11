@@ -67,7 +67,6 @@ function countInitialize() {
             if (game.initialSetup[i][j]) game.correct_count++;
         }
     }
-    copyBoard(game.grid, game.initialSetup);
 }
 
 function boardInitialize() {
@@ -96,7 +95,6 @@ function correctCount(row, col, newValue) {
 
 function boxInputEvent(e) {
     e.preventDefault();
-
     let value = e.target.value;
     if (value === "") return;
     else if (value === "0") value = "";
@@ -157,7 +155,6 @@ function inputButtonClickEvent(e) {
         if (button === target) return;
         button.classList.remove("input-button-active");
     });
-    // if (e.target.tagName === "I") e.target.parentElement.classList.toggle("input-button-active");
     target.classList.toggle("input-button-active");
 }
 
@@ -165,25 +162,31 @@ function unfocusable(e) {
     e.target.blur();
 }
 
-function startGame() {
-    resetGame();
+function startGame(e) {
+    if (e) e.preventDefault();
+    selectOne("#start-timer").innerText = "Restart Same Game";
+    copyBoard(game.initialSetup, game.grid);
+    boardInitialize();
+    resetGame("");
     addGameEventListeners();
     timerSet();
 }
 
-function newGame() {
+function newGame(e) {
+    if (e) e.preventDefault();
+    selectOne("#start-timer").innerText = "Start Game";
     gameGridSetup();
-    resetGame();
+    boardInitialize();
+    resetGame("");
     resetGameEventListeners();
 }
 
-function resetGame() {
+function resetGame(resultDisplayText) {
     clearInterval(timer.key);
     timer.timeRemaining = 0;
     game.currentValue = "";
     timerDisplay.innerText = timeConvert(Number.parseInt(boardControls.timer.value));
-    resultDisplay.innerText = "";
-    boardInitialize();
+    resultDisplay.innerText = resultDisplayText;
     countInitialize();
     removeExtraClasses();
 }
@@ -223,8 +226,8 @@ function resetGameEventListeners() {
 
 function displaySolution() {
     boxes.forEach((box, i) => {
-        col = i % 9;
-        row = (i - col) / 9;
+        let col = i % 9;
+        let row = (i - col) / 9;
         box.value = game.solution[row][col];
     });
 }
@@ -239,8 +242,7 @@ function timeConvert(timeRemaining) {
 
 function checkSolve() {
     if (game.correct_count === 81) {
-        clearInterval(timer.key);
-        resultDisplay.innerText = "You win.";
+        resetGame("You win");
         resetGameEventListeners();
     }
 }
@@ -253,9 +255,9 @@ function timerSet() {
         let timeRemaining = Math.floor(now / 1000);
         timerDisplay.innerText = timeConvert(timeRemaining);
         if (timeRemaining <= 0) {
-            clearInterval(timer.key);
-            timerDisplay.innerText = timeConvert(Number.parseInt(boardControls.timer.value));
-            resultDisplay.innerText = "Time is Up.";
+            document.activeElement.blur();
+            resetGame("Time is up");
+            resetGameEventListeners();
             displaySolution();
         }
     }, 500);
@@ -276,15 +278,8 @@ function gameSetup() {
             box.classList.add("left-box");
         }
     });
-    selectOne("#new-game").addEventListener("click", (e) => {
-        e.preventDefault();
-        newGame();
-    });
-
-    selectOne("#start-timer").addEventListener("click", (e) => {
-        e.preventDefault();
-        startGame();
-    });
+    selectOne("#new-game").addEventListener("click", newGame);
+    selectOne("#start-timer").addEventListener("click", startGame);
     newGame();
 }
 
